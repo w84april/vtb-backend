@@ -16,6 +16,7 @@ const register = async () => {
 };
 
 const approve = async (address, metadata) => {
+  console.log(address, metadata);
   const res = await fetch('https://hackathon.lsp.team/hk/v1/nft/generate', {
     ...options,
     body: JSON.stringify({
@@ -35,6 +36,9 @@ const getUserItems = async address => {
 };
 
 const getNftInfo = async tokenId => {
+  if (!tokenId) {
+    return;
+  }
   const res = await fetch(baseUrl + `/nft/${tokenId}`);
   const data = await res.json();
   return data;

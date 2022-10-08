@@ -90,7 +90,7 @@ const pinFileAndMetadata = async () => {
         .then(function (response) {
           fs.writeFileSync(
             path,
-            `{ "imageUrl": "https://gateway.pinata.cloud/ipfs/${response.data.IpfsHash}", "type": ${getItemType(randomInt)} "power": ${getRandomInt(10, 50)} }`,
+            `{ "imageUrl": "https://gateway.pinata.cloud/ipfs/${response.data.IpfsHash}", "type": "${getItemType(randomInt)}", "power": ${getRandomInt(10, 50)} }`,
           );
           const readStream = fs.createReadStream(path);
           metadataFormdata.append('file', path);

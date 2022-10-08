@@ -14,7 +14,7 @@ const approveEvent = Router.post('/event/approve', async (req, res) => {
     }
 
     const { userId, eventId, approve: approveType } = req.body;
-
+    console.log({ userId });
     await UserEvent.update(
       { approve: approveType },
       {
@@ -26,11 +26,12 @@ const approveEvent = Router.post('/event/approve', async (req, res) => {
     );
 
     if (approveType === 'accepted') {
-      const currentUser = User.findOne({
+      const currentUser = await User.findOne({
         where: {
           id: userId,
         },
       });
+      console.log({ currentUser });
       const metadata = await pinFileAndMetadata();
       const txHash = await approve(currentUser?.publicKey, metadata);
 
