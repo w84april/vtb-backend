@@ -40,6 +40,14 @@ module.exports = {
           notEmpty: true,
         },
       },
+      createdAt: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false,
+      },
+      updatedAt: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: false,
+      },
     });
   },
 

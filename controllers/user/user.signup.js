@@ -2,10 +2,7 @@ const e = require('express');
 const Router = e.Router();
 const { check, validationResult } = require('express-validator');
 const { User } = require('../../models');
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
 const jwt = require('jsonwebtoken');
-const { user } = require('pg/lib/defaults');
 const { register } = require('../../externalApi');
 
 const postUser = Router.post(

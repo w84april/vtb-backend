@@ -28,6 +28,7 @@ module.exports = {
             validate: {
               notEmpty: true,
             },
+            defaultValue: 'pending'
           },
           UserId: {
             type: Sequelize.UUID,

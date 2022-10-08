@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
                 validate: {
                     notEmpty: true,
                 },
+                defaultValue: 'pending'
             },
             createdAt: {
                 type: DataTypes.DATE,
