@@ -15,12 +15,12 @@ const register = async () => {
   return data;
 };
 
-const approve = async address => {
+const approve = async (address, metadata) => {
   const res = await fetch('https://hackathon.lsp.team/hk/v1/nft/generate', {
     ...options,
     body: JSON.stringify({
       toPublicKey: address,
-      uri: 'ipfs://QmSWb5d3dgnzTsYoR49bXin87NTp3ufYPRH3q5UsCs3nz2',
+      uri: `ipfs://${metadata}`,
       nftCount: 1,
     }),
   });

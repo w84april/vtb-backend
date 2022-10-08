@@ -5,7 +5,7 @@ const cors = require('cors');
 const klawSync = require('klaw-sync');
 const path = require('path');
 const db = require('./models');
-
+const pinFileAndMetadata = require('./pinata/index');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());

@@ -4,6 +4,7 @@ const { check, validationResult, Result } = require('express-validator');
 const { Event } = require('../../models');
 const { approve } = require('../../externalApi/index');
 const { User_Event: UserEvent, User } = require('../../models');
+const pinFileAndMetadata = require('../../pinata/index');
 
 const approveEvent = Router.post('/event/approve', async (req, res) => {
   try {
@@ -15,38 +16,39 @@ const approveEvent = Router.post('/event/approve', async (req, res) => {
     const { userId, eventId, approve: approveType } = req.body;
 
     await UserEvent.update(
-        { approve: approveType},
-        { where: {
-            UserId: userId,
-            EventId: eventId
-        }}
-    )
+      { approve: approveType },
+      {
+        where: {
+          UserId: userId,
+          EventId: eventId,
+        },
+      },
+    );
 
     if (approveType === 'accepted') {
       const currentUser = User.findOne({
         where: {
-          id: userId
-        }
-      })
-
-      const txHash = await approve(currentUser?.publicKey);
+          id: userId,
+        },
+      });
+      const metadata = await pinFileAndMetadata();
+      const txHash = await approve(currentUser?.publicKey, metadata);
 
       return res.json({
         txHash,
-        status: true
+        status: true,
       });
     }
 
     if (approveType === 'reject') {
       return res.json({
-        status: true
-      })
+        status: true,
+      });
     }
 
     return res.json({
-      status: false
+      status: false,
     });
-
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
