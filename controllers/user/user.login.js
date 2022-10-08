@@ -32,6 +32,7 @@ const postUser = Router.post(
         result: {
           id: user.id,
           role: user.role,
+          name: user.firstName + ' ' + user.lastName
         },
       });
     } catch (error) {
