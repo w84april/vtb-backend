@@ -7,13 +7,17 @@ const fetch = require('node-fetch');
 const authorization = require('../../authorization');
 const { getUserItems, getNftInfo } = require('../../externalApi');
 const getGatewayUrl = require('../../utils');
-const getItems = Router.get('/items', async (req, res) => {
+const getItems = Router.get('/items', authorization, async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const address = req.query.address;
+
+    const user = await User.findOne({
+      where: { id: res.locals.id },
+    });
+    const address = user.dataValues.publicKey;
     const userItems = await getUserItems(address);
     const tokenIds = userItems.balance.map(item => [...item.tokens]).flat();
     const rawNfts = await Promise.all(
