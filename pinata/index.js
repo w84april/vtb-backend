@@ -13,13 +13,25 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
+const getItemType = randomValue => {
+  if (randomValue > 0 && randomValue <= 5) {
+    return 'weapon';
+  }
+  if (randomValue > 5 && randomValue < 10) {
+    return 'armour';
+  }
+  return 'helmet';
+};
+
 const pinFileAndMetadata = async () => {
   return new Promise(resolve => {
     console.log('pinfile');
 
     //we gather a local file for this example, but any valid readStream source will work here.
     let data = new FormData();
-    data.append('file', fs.createReadStream(`./assets/${getRandomInt(1, 12)}.png`));
+    const randomInt = getRandomInt(1, 12);
+
+    data.append('file', fs.createReadStream(`./assets/${randomInt}.png`));
     let metadataFormdata = new FormData();
 
     //You'll need to make sure that the metadata is in the form of a JSON object that's been convered to a string
@@ -76,7 +88,10 @@ const pinFileAndMetadata = async () => {
           },
         })
         .then(function (response) {
-          fs.writeFileSync(path, `{ "imageUrl": "https://gateway.pinata.cloud/ipfs/${response.data.IpfsHash}", "power": ${getRandomInt(10, 50)} }`);
+          fs.writeFileSync(
+            path,
+            `{ "imageUrl": "https://gateway.pinata.cloud/ipfs/${response.data.IpfsHash}", "type": ${getItemType(randomInt)} "power": ${getRandomInt(10, 50)} }`,
+          );
           const readStream = fs.createReadStream(path);
           metadataFormdata.append('file', path);
           pinJSONToIPFS()
