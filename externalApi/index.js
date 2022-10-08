@@ -1,5 +1,4 @@
 const fetch = require('node-fetch');
-const { response } = require('express');
 const baseUrl = 'https://hackathon.lsp.team/hk/v1';
 
 const options = {

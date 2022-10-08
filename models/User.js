@@ -25,6 +25,42 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
+      items: {
+        type: DataTypes.ARRAY(DataTypes.INTEGER),
+        allowNull: false,
+        validate: {
+          notEmpty: false,
+        },
+        defaultValue: [],
+      },
+      helmet: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        validate: {
+          notEmpty: false,
+        },
+      },
+      armor: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        validate: {
+          notEmpty: false,
+        },
+      },
+      firstWeapon: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        validate: {
+          notEmpty: false,
+        },
+      },
+      secondWeapon: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        validate: {
+          notEmpty: false,
+        },
+      },
       privateKey: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -61,8 +97,8 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   User.associate = models => {
-      User.belongsToMany(models.Event, { through: 'User_Event' });
-  }
+    User.belongsToMany(models.Event, { through: 'User_Event' });
+  };
 
   return User;
 };
