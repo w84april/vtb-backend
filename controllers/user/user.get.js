@@ -14,9 +14,9 @@ const getUser = Router.get('/user', authorization, async (req, res) => {
     const user = await User.findOne({
       where: { id: res.locals.id },
     });
-    const { id, firstName, lastName, fatherName, email, role } = user;
+    const { id, firstName, lastName, fatherName, publicKey, role, armor, firstWeapon, secondWeapon, helmet } = user;
 
-    res.send({ id, firstName, lastName, fatherName, email, role });
+    res.send({ id, firstName, lastName, fatherName, publicKey, role, armor, firstWeapon, secondWeapon, helmet });
   } catch (err) {
     return res.status(400).send(err.message);
   }
