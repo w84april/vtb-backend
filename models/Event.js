@@ -47,5 +47,9 @@ module.exports = (sequelize, DataTypes) => {
         },
     );
 
-    return User;
+    Event.associate = models => {
+        Event.belongsToMany(models.User, { through: 'User_Event' });
+    }
+
+    return Event;
 };
