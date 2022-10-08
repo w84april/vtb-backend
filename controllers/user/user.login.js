@@ -8,8 +8,6 @@ const dotenv = require('dotenv').config();
 
 const postUser = Router.post(
   '/login',
-  check('email').isEmail().withMessage('Invalid email'),
-  check('password').isString().withMessage('Invalid email'),
 
   async (req, res) => {
     try {
@@ -19,12 +17,12 @@ const postUser = Router.post(
       }
 
       const user = await User.findOne({
-        where: { email: req.body.email },
+        where: { privateKey : req.body.privateKey },
       });
 
-      if (!user) throw new Error("User with such email doesn't exist");
+      if (!user) throw new Error("User with such private key doesn't exist");
 
-      if (!bcrypt.compareSync(req.body.password, user.password)) throw new Error('Wrong username/password');
+      // if (!bcrypt.compareSync(req.body.password, user.password)) throw new Error('Wrong username/password');
       const token = jwt.sign({ id: user.id, role: user.role }, process.env.SECRET, {
         expiresIn: 3000,
       });

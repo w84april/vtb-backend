@@ -2,7 +2,7 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return queryInterface.createTable('Achievement', {
+    return queryInterface.createTable('User', {
       id: {
         type: Sequelize.DataTypes.UUID,
         allowNull: false,
@@ -12,76 +12,40 @@ module.exports = {
         primaryKey: true,
         defaultValue: Sequelize.DataTypes.UUIDV1,
       },
-      projectName: {
+      firstName: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: true,
         },
       },
-      owner: {
+      lastName: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: true,
         },
       },
-      ownerFirstName: {
+      publicKey: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: true,
         },
+        defaultValue: false,
       },
-      ownerLastName: {
+      privateKey: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: true,
         },
+        defaultValue: false,
       },
-      ownerFatherName: {
-        type: Sequelize.DataTypes.STRING,
+      role: {
+        type: Sequelize.DataTypes.ENUM('user', 'admin'),
         allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
-      },
-      team: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: true,
-        validate: {
-          notEmpty: true,
-        },
-      },
-      result: {
-        type: Sequelize.DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
-      },
-      event: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
-      },
-      approved: {
-        type: Sequelize.DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
-        defaultValue: 2,
-      },
-      file: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
+        defaultValue: 'user',
       },
       createdAt: {
         type: Sequelize.DataTypes.DATE,
@@ -95,6 +59,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.dropTable('Achievement');
+    return queryInterface.dropTable('User');
   },
 };

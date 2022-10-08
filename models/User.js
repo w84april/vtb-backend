@@ -25,33 +25,24 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
-      fatherName: {
+      privateKey: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: true,
         },
       },
-      email: {
+      publicKey: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: true,
         },
-        defaultValue: false,
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
-        defaultValue: false,
       },
       role: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: 0,
+        defaultValue: 'user',
       },
       createdAt: {
         type: DataTypes.DATE,
