@@ -47,6 +47,42 @@ module.exports = {
         allowNull: false,
         defaultValue: 'user',
       },
+      items: {
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
+        allowNull: false,
+        validate: {
+          notEmpty: false,
+        },
+        defaultValue: []
+      },
+      helmet: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        validate: {
+          notEmpty: false,
+        },
+      },
+      armor: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        validate: {
+          notEmpty: false,
+        },
+      },
+      firstWeapon: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        validate: {
+          notEmpty: false,
+        },
+      },
+      secondWeapon: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        validate: {
+          notEmpty: false,
+        },
+      },
       createdAt: {
         type: Sequelize.DataTypes.DATE,
         allowNull: false,
