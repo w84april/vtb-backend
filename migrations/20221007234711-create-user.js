@@ -50,9 +50,6 @@ module.exports = {
       items: {
         type: Sequelize.ARRAY(Sequelize.INTEGER),
         allowNull: false,
-        validate: {
-          notEmpty: false,
-        },
         defaultValue: []
       },
       helmet: {

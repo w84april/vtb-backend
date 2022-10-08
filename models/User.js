@@ -28,9 +28,6 @@ module.exports = (sequelize, DataTypes) => {
       items: {
         type: DataTypes.ARRAY(DataTypes.INTEGER),
         allowNull: false,
-        validate: {
-          notEmpty: false,
-        },
         defaultValue: [],
       },
       helmet: {

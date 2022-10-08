@@ -3,6 +3,7 @@ const Router = e.Router();
 const { check, validationResult, Result } = require('express-validator');
 const { Event } = require('../../models');
 const { approve } = require('../../externalApi/index');
+const { User_Event: UserEvent, User } = require('../../models');
 
 const approveEvent = Router.post('/event/approve', async (req, res) => {
   try {
@@ -11,13 +12,41 @@ const approveEvent = Router.post('/event/approve', async (req, res) => {
       return res.status(422).json({ errors: errors.array()[0].msg });
     }
 
-    const { address } = req.body;
-    console.log(address);
-    const txHash = await approve(address);
+    const { userId, eventId, approve: approveType } = req.body;
 
-    res.json({
-      txHash,
+    await UserEvent.update(
+        { approve: approveType},
+        { where: {
+            UserId: userId,
+            EventId: eventId
+        }}
+    )
+
+    if (approveType === 'accepted') {
+      const currentUser = User.findOne({
+        where: {
+          id: userId
+        }
+      })
+
+      const txHash = await approve(currentUser?.publicKey);
+
+      return res.json({
+        txHash,
+        status: true
+      });
+    }
+
+    if (approveType === 'reject') {
+      return res.json({
+        status: true
+      })
+    }
+
+    return res.json({
+      status: false
     });
+
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
