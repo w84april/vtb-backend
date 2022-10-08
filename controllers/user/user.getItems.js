@@ -23,9 +23,8 @@ const getItems = Router.get('/items', async (req, res) => {
         return getNftInfo(tokenId);
       }),
     );
-    console.log(rawNfts);
-    const newNfts = rawNfts.map(nft => ({ ...nft, imageUrl: getGatewayUrl(nft.uri) }));
-    res.send(newNfts);
+
+    res.send(rawNfts);
   } catch (err) {
     return res.status(400).send(err.message);
   }
