@@ -27,7 +27,7 @@ const getItems = Router.get('/items', async (req, res) => {
         const res = await fetch(getGatewayUrl(nft.uri));
         const metadata = await res.json();
         console.log(metadata);
-        return { ...nft, metadataUrl: getGatewayUrl(nft.uri), imageUrl: getGatewayUrl(metadata.imageUrl), power: metadata.power };
+        return { ...nft, metadataUrl: getGatewayUrl(nft.uri), imageUrl: getGatewayUrl(metadata.imageUrl), power: metadata.power, type: metadata.type };
       }),
     );
     res.send(newNfts);
