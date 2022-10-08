@@ -2,6 +2,7 @@ const e = require('express');
 const Router = e.Router();
 const { User } = require('../../models');
 const { validationResult } = require('express-validator');
+const fetch = require('node-fetch');
 
 const authorization = require('../../authorization');
 const { getUserItems, getNftInfo } = require('../../externalApi');
@@ -13,18 +14,23 @@ const getItems = Router.get('/items', async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
     const address = req.query.address;
-    console.log(address);
     const userItems = await getUserItems(address);
-    console.log(userItems);
     const tokenIds = userItems.balance.map(item => [...item.tokens]).flat();
     const rawNfts = await Promise.all(
       tokenIds.map(tokenId => {
-        console.log(tokenId);
         return getNftInfo(tokenId);
       }),
     );
-
-    res.send(rawNfts);
+    console.log(rawNfts);
+    const newNfts = await Promise.all(
+      rawNfts.map(async nft => {
+        const res = await fetch(getGatewayUrl(nft.uri));
+        const metadata = await res.json();
+        console.log(metadata);
+        return { ...nft, metadataUrl: getGatewayUrl(nft.uri), imageUrl: getGatewayUrl(metadata.imageUrl), power: metadata.power };
+      }),
+    );
+    res.send(newNfts);
   } catch (err) {
     return res.status(400).send(err.message);
   }
