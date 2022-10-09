@@ -17,6 +17,7 @@ const getDoneUserEvents = Router.get('/user-events', authorization, async (req, 
     const events = await UserEvent.findAll({
       where: {
         done: true,
+        approve: 'pending'
       },
     });
     const formattedEvents = events.map(event => event.dataValues);
