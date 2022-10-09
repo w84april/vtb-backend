@@ -1,14 +1,18 @@
 const e = require('express');
 const Router = e.Router();
 const { validationResult } = require('express-validator');
-const { User_Event: UserEvent } = require('../../models');
+const { User_Event: UserEvent, User, Events } = require('../../models');
+const authorization = require('../../authorization');
 
-const getDoneUserEvents = Router.get('/user-events', async (req, res) => {
+const getDoneUserEvents = Router.get('/user-events', authorization, async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+
+    const users = await User.findAll();
+    const ev = await Events.findAll();
 
     const events = await UserEvent.findAll({
       where: {
@@ -17,7 +21,13 @@ const getDoneUserEvents = Router.get('/user-events', async (req, res) => {
     });
     const formattedEvents = events.map(event => event.dataValues);
 
-    res.send(formattedEvents);
+    const respEvents = formattedEvents.map(event => ({
+      ...event,
+      user: users.find(u => u.id === event.UserId),
+      event: ev.find(e => e.id === event.EventId)
+    }))
+
+    res.send(respEvents);
   } catch (err) {
     return res.status(400).send(err.message);
   }
