@@ -33,6 +33,7 @@ const approveEvent = Router.post('/event/approve', async (req, res) => {
       });
       console.log({ currentUser });
       const metadata = await pinFileAndMetadata();
+      console.log(currentUser.publicKey, metadata);
       const txHash = await approve(currentUser?.publicKey, metadata);
 
       return res.json({
