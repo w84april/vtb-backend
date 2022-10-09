@@ -44,9 +44,23 @@ const getNftInfo = async tokenId => {
   return data;
 };
 
+const sendNft = async (fromPrivateKey, toPublicKey, tokenId) => {
+  const res = await fetch(baseUrl + `/transfers/nft`, {
+    ...options,
+    body: JSON.stringify({
+      fromPrivateKey,
+      toPublicKey,
+      tokenId,
+    }),
+  });
+  const data = await res.json();
+  return data;
+};
+
 module.exports = {
   register,
   approve,
   getUserItems,
   getNftInfo,
+  sendNft,
 };

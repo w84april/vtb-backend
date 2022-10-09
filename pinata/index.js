@@ -18,7 +18,7 @@ const getItemType = randomValue => {
     return 'weapon';
   }
   if (randomValue > 5 && randomValue < 10) {
-    return 'armour';
+    return 'armor';
   }
   return 'helmet';
 };
