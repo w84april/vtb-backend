@@ -3,8 +3,7 @@ const Router = e.Router();
 const { validationResult } = require('express-validator');
 const { User_Event: UserEvent } = require('../../models');
 
-const authorization = require('../../authorization');
-const getDoneUserEvents = Router.get('/user-events', authorization, async (req, res) => {
+const getDoneUserEvents = Router.get('/user-events', async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
