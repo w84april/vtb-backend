@@ -58,7 +58,7 @@ const sendNft = async (fromPrivateKey, toPublicKey, tokenId) => {
 };
 
 const getBalance = async address => {
-  const res = await fetch(`https://hackathon.lsp.team/hk/v1/wallet/${address}/balance`);
+  const res = await fetch(baseUrl + `/wallet/${address}/balance`);
   const data = await res.json();
   return data;
 };

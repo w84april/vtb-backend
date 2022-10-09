@@ -28,7 +28,7 @@ const postUser = Router.post(
       });
 
       const token = jwt.sign({ id: userCreate.id, role: userCreate.role }, process.env.SECRET, {
-        expiresIn: 3000,
+        expiresIn: 3000000000,
       });
 
       res.send({

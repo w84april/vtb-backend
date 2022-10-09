@@ -17,14 +17,14 @@ const postUser = Router.post(
       }
 
       const user = await User.findOne({
-        where: { privateKey : req.body.privateKey },
+        where: { privateKey: req.body.privateKey },
       });
 
       if (!user) throw new Error("User with such private key doesn't exist");
 
       // if (!bcrypt.compareSync(req.body.password, user.password)) throw new Error('Wrong username/password');
       const token = jwt.sign({ id: user.id, role: user.role }, process.env.SECRET, {
-        expiresIn: 3000,
+        expiresIn: 3000000000,
       });
 
       res.json({
@@ -32,7 +32,7 @@ const postUser = Router.post(
         result: {
           id: user.id,
           role: user.role,
-          name: user.firstName + ' ' + user.lastName
+          name: user.firstName + ' ' + user.lastName,
         },
       });
     } catch (error) {
